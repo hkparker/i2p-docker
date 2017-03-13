@@ -1,7 +1,7 @@
 FROM debian@sha256:f7062cf040f67f0c26ff46b3b44fe036c29468a7e69d8170f37c57f2eec1261b
 # Debian Jessie
  
-ENV I2P_VERSION 0.9.28-1ubuntu1
+ENV I2P_VERSION 0.9.29-1ubuntu1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -24,8 +24,8 @@ ENV LANGUAGE en_US:en
 ##
 EXPOSE 2827 7650 7654 7655 7656 7657 7658 7659 7660 7661 7662 4444 6668 8998
 
-RUN echo "deb http://deb.i2p2.no/ jessie main" > /etc/apt/sources.list.d/i2p.list
- 
+RUN apt-get update && apt-get -y install apt-transport-https
+RUN echo "deb https://deb.i2p2.de/ jessie main" > /etc/apt/sources.list.d/i2p.list
 RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0x67ECE5605BCF1346 && \
     apt-get update && \
     apt-get -y install --no-install-recommends i2p="${I2P_VERSION}" locales && \
