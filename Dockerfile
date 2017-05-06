@@ -1,7 +1,7 @@
 FROM debian@sha256:f7062cf040f67f0c26ff46b3b44fe036c29468a7e69d8170f37c57f2eec1261b
 # Debian Jessie
  
-ENV I2P_VERSION 0.9.29-1ubuntu1
+ENV I2P_VERSION 0.9.30p-1~precise+1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
