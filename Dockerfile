@@ -1,7 +1,6 @@
-FROM debian@sha256:f7062cf040f67f0c26ff46b3b44fe036c29468a7e69d8170f37c57f2eec1261b
-# Debian Jessie
+FROM debian:stretch
  
-ENV I2P_VERSION 0.9.30p-1~precise+1
+ENV I2P_VERSION 0.9.30-3ubuntu1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -24,14 +23,26 @@ ENV LANGUAGE en_US:en
 ##
 EXPOSE 2827 7650 7654 7655 7656 7657 7658 7659 7660 7661 7662 4444 6668 8998
 
-RUN apt-get update && apt-get -y install apt-transport-https
-RUN echo "deb https://deb.i2p2.de/ jessie main" > /etc/apt/sources.list.d/i2p.list
-RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0x67ECE5605BCF1346 && \
-    apt-get update && \
-    apt-get -y install --no-install-recommends i2p="${I2P_VERSION}" locales && \
+RUN apt-get -y update && \
+    apt-get -y install \
+	  apt-transport-https \
+	  gnupg \
+	&& \
+    apt-get clean
+RUN echo "deb https://deb.i2p2.de/ stretch main" > /etc/apt/sources.list.d/i2p.list && \
+    apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0x67ECE5605BCF1346
+RUN apt-get -y update && \
+    apt-get -y install \
+	  procps \
+	  i2p="${I2P_VERSION}" \
+	  i2p-keyring \
+	  locales \
+	&& \
     echo "RUN_AS_USER=i2psvc" >> /etc/default/i2p && \
     apt-get clean && \
-    rm -rf /var/lib/i2p && mkdir -p /var/lib/i2p/i2p-config && chown -R i2psvc:i2psvc /var/lib/i2p && \
+    rm -rf /var/lib/i2p && \
+	mkdir -p /var/lib/i2p/i2p-config && \
+	chown -R i2psvc:i2psvc /var/lib/i2p && \
     rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
  
 # Enable UTF-8, mostly for I2PSnark
@@ -49,3 +60,4 @@ VOLUME /var/lib/i2p
 USER i2psvc
 ENTRYPOINT ["/usr/bin/i2prouter"]
 CMD ["console"]
+
