@@ -30,7 +30,7 @@ RUN apt-get -y update && \
 	&& \
     apt-get clean
 RUN echo "deb https://deb.i2p2.de/ stretch main" > /etc/apt/sources.list.d/i2p.list && \
-    apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0x67ECE5605BCF1346
+    apt-key adv --keyserver hkp://pgp.mit.edu --recv-key 0x67ECE5605BCF1346
 RUN apt-get -y update && \
     apt-get -y install \
 	  procps \
