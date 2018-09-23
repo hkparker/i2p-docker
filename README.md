@@ -8,8 +8,9 @@ This is the Java I2P router in Docker.
 
 ### Common problems
 
-If you use Fedora or other selinux enabled OS and get ```mkdir: cannot create directory ‘/var/lib/i2p/.i2p’: Permission denied``` run commands
-```shell
-setenforce 0
-chcon -Rt svit_sandbox_file_t $HOME/.i2p
+If you use Fedora or other selinux enabled OS and get ```mkdir: cannot create directory ‘/var/lib/i2p/.i2p’: Permission denied```, try adding a `:Z` to your volume argument:
+
 ```
+-v ~/.i2p:/var/lib/i2p:Z
+```
+As described in the [docker documentation](https://docs.docker.com/storage/bind-mounts/#configure-the-selinux-label), this should set the selinux labels correctly.
