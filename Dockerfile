@@ -1,6 +1,6 @@
 FROM debian:stretch
  
-ENV I2P_VERSION 0.9.36-2ubuntu1
+ENV I2P_VERSION 0.9.37-1ubuntu1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -30,7 +30,7 @@ RUN apt-get -y update && \
 	&& \
     apt-get clean
 RUN echo "deb https://deb.i2p2.de/ stretch main" > /etc/apt/sources.list.d/i2p.list && \
-    apt-key adv --keyserver hkp://pgp.mit.edu --recv-key 0x67ECE5605BCF1346
+    apt-key adv --no-tty --keyserver hkp://pgp.mit.edu --recv-key 0x67ECE5605BCF1346
 RUN apt-get -y update && \
     apt-get -y install \
 	  procps \
