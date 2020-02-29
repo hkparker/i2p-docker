@@ -1,6 +1,6 @@
 FROM debian:stretch
  
-ENV I2P_VERSION 0.9.37-1ubuntu1
+ENV I2P_VERSION 0.9.45p-1~trusty+1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -26,11 +26,12 @@ EXPOSE 2827 7650 7654 7655 7656 7657 7658 7659 7660 7661 7662 4444 6668 8998
 RUN apt-get -y update && \
     apt-get -y install \
 	  apt-transport-https \
-	  gnupg \
-	&& \
+	  gnupg && \
     apt-get clean
+
 RUN echo "deb https://deb.i2p2.de/ stretch main" > /etc/apt/sources.list.d/i2p.list && \
     apt-key adv --no-tty --keyserver hkp://pgp.mit.edu --recv-key 0x67ECE5605BCF1346
+
 RUN apt-get -y update && \
     apt-get -y install \
 	  procps \
@@ -41,8 +42,8 @@ RUN apt-get -y update && \
     echo "RUN_AS_USER=i2psvc" >> /etc/default/i2p && \
     apt-get clean && \
     rm -rf /var/lib/i2p && \
-	mkdir -p /var/lib/i2p/i2p-config && \
-	chown -R i2psvc:i2psvc /var/lib/i2p && \
+    mkdir -p /var/lib/i2p/i2p-config && \
+    chown -R i2psvc:i2psvc /var/lib/i2p && \
     rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
  
 # Enable UTF-8, mostly for I2PSnark
@@ -60,4 +61,3 @@ VOLUME /var/lib/i2p
 USER i2psvc
 ENTRYPOINT ["/usr/bin/i2prouter"]
 CMD ["console"]
-
