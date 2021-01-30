@@ -1,6 +1,6 @@
-FROM debian:stretch
+FROM debian:buster
  
-ENV I2P_VERSION 0.9.45p-1~trusty+1
+ENV I2P_VERSION 0.9.48-1ubuntu1
 ENV I2P_DIR /usr/share/i2p
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -26,11 +26,12 @@ EXPOSE 2827 7650 7654 7655 7656 7657 7658 7659 7660 7661 7662 4444 6668 8998
 RUN apt-get -y update && \
     apt-get -y install \
 	  apt-transport-https \
-	  gnupg && \
+	  gnupg  curl && \
     apt-get clean
 
-RUN echo "deb https://deb.i2p2.de/ stretch main" > /etc/apt/sources.list.d/i2p.list && \
-    apt-key adv --no-tty --keyserver hkp://pgp.mit.edu --recv-key 0x67ECE5605BCF1346
+RUN echo "deb https://deb.i2p2.de/ buster main" > /etc/apt/sources.list.d/i2p.list && \
+    curl https://geti2p.net/_static/i2p-debian-repo.key.asc > i2p2.de.asc && \
+    apt-key add i2p2.de.asc
 
 RUN apt-get -y update && \
     apt-get -y install \
